@@ -1,0 +1,65 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+  
+  .header .logo,
+  .header .titulo,
+  .header .acciones {
+    margin: 5px;
+  }
+  
+  .header .iniciosesion a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .contenedor-productos a{
+    color: #222;
+  }
+  
+  .contenedor-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .producto {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-weight: bold;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-around;
+    background-color: #222;
+    color: white;
+    padding: 20px;
+    font-size: 14px;
+    flex-wrap: wrap;
+  }
+  
+  .footer .footer-col {
+    margin: 10px;
+    text-align: center;
+  }
+  

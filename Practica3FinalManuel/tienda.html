@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yestelle.com - Tienda</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">YESTELLE</div>
+    <div class="titulo">Yestelle.com</div>
+    <div class="iniciosesion">
+      <a href="login.html">Iniciar sesión</a>
+    </div>
+  </header>
+
+  <main class="contenedor-productos" id="contenedor-productos">
+    <!-- Aquí se insertarán dinámicamente los productos desde PHP -->
+  </main>
+
+  <footer class="footer">
+    <div class="footer-col">Términos y condiciones</div>
+    <div class="footer-col">Redes sociales y correo de contacto</div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("productos.php")
+        .then((res) => {
+          if (!res.ok) throw new Error("No autorizado o error en el servidor");
+          return res.json();
+        })
+        .then((data) => {
+          const contenedor = document.getElementById("contenedor-productos");
+          contenedor.innerHTML = ""; // Borra cualquier contenido anterior
+          data.forEach((prod) => {
+            const div = document.createElement("div");
+            div.className = "producto";
+            div.innerHTML = `
+              <h3>${prod.nombre}</h3>
+              <p>Precio: €${prod.precio}</p>
+              <form action="comprar.php" method="post">
+                <input type="hidden" name="referencia" value="${prod.referencia}">
+                <button type="submit">Comprar</button>
+              </form>
+            `;
+            contenedor.appendChild(div);
+          });
+        })
+        .catch((err) => {
+          document.getElementById("contenedor-productos").innerText =
+            "Error al cargar productos: " + err.message;
+        });
+    });
+  </script>
+</body>
+</html>
