@@ -1,29 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            text-align: center;
-            margin: auto;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Registro</title>
 </head>
 <body>
-    <form action="registro.php" method="post">
-        <h2>Registro</h2>
-        Usuario: <input type="text" name="usuario" required><br>
-        Contraseña: <input type="password" name="contrasena" required><br>
-        Nombre: <input type="text" name="nombre"><br>
-        Apellidos: <input type="text" name="apellidos"><br>
-        Correo: <input type="email" name="correo"><br>
-        Fecha de nacimiento: <input type="date" name="fecha_nacimiento"><br>
-        Género: <input type="text" name="genero"><br>
-        <input type="submit" value="Registrarse">
-      </form>
+  <h2>Registro de usuario</h2>
+  <form id="registroForm">
+    <input type="text" id="usuario" placeholder="Usuario" required><br>
+    <input type="password" id="contrasena" placeholder="Contraseña" required><br>
+    <input type="text" id="nombre" placeholder="Nombre" required><br>
+    <input type="email" id="correo" placeholder="Correo" required><br>
+    <button type="submit">Registrarse</button>
+    <p id="mensaje" style="color: red;"></p>
+  </form>
+
+  <script>
+    document.getElementById("registroForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const datos = new URLSearchParams();
+      datos.append("usuario", document.getElementById("usuario").value);
+      datos.append("contrasena", document.getElementById("contrasena").value);
+      datos.append("nombre", document.getElementById("nombre").value);
+      datos.append("correo", document.getElementById("correo").value);
+
+      fetch("registro.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: datos
+      })
+      .then(res => res.text())
+      .then(respuesta => {
+        if (respuesta.trim() === "OK") {
+          window.location.href = "index.html";
+        } else {
+          document.getElementById("mensaje").textContent = respuesta;
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-
-  

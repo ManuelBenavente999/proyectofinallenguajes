@@ -1,41 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="login.css" />
+  <meta charset="UTF-8">
+  <title>Login</title>
 </head>
 <body>
-    <form action="login.php" method="post">
-        <h2>Login</h2>
-        Usuario: <input type="text" name="usuario" required><br>
-        Contraseña: <input type="password" name="contrasena" required><br>
-        <input type="submit" value="Entrar">
-      </form>
+  <h2>Iniciar sesión</h2>
+  <form id="loginForm">
+    <input type="text" id="usuario" placeholder="Usuario" required><br>
+    <input type="password" id="contrasena" placeholder="Contraseña" required><br>
+    <button type="submit">Entrar</button>
+    <p id="mensaje" style="color: red;"></p>
+  </form>
 
-      <script>
-        document.getElementById("loginForm").addEventListener("submit", function(e) {
-          e.preventDefault(); // evita recargar la página
-          const formData = new FormData();
-          formData.append("usuario", document.getElementById("usuario").value);
-          formData.append("contrasena", document.getElementById("contrasena").value);
-        
-          fetch("login.php", {
-            method: "POST",
-            body: formData
-          })
-          .then(response => response.text())
-          .then(data => {
-            if (data === "OK") {
-              window.location.href = "tienda.html";
-            } else {
-              document.getElementById("mensaje").innerText = data;
-            }
-          });
-        });
-        </script>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const usuario = document.getElementById("usuario").value;
+      const contrasena = document.getElementById("contrasena").value;
+
+      fetch("login.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `usuario=${encodeURIComponent(usuario)}&contrasena=${encodeURIComponent(contrasena)}`
+      })
+      .then(res => res.text())
+      .then(respuesta => {
+        if (respuesta.trim() === "OK") {
+          window.location.href = "index.html";
+        } else {
+          document.getElementById("mensaje").textContent = respuesta;
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-
-  

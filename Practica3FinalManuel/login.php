@@ -3,27 +3,26 @@ session_start();
 include 'conexion.php';
 
 if (!isset($_POST['usuario']) || !isset($_POST['contrasena'])) {
-    echo "Datos incompletos.";
-    exit;
+  echo "Faltan datos.";
+  exit;
 }
 
-$usuario = trim($_POST['usuario']);
+$usuario = $_POST['usuario'];
 $contrasena = $_POST['contrasena'];
 
-$sql = "SELECT * FROM usuarios WHERE usuario = ?";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("SELECT contrasena FROM usuarios WHERE usuario = ?");
 $stmt->bind_param("s", $usuario);
 $stmt->execute();
-$result = $stmt->get_result();
+$resultado = $stmt->get_result();
 
-if ($row = $result->fetch_assoc()) {
-    if (password_verify($contrasena, $row['contrasena'])) {
-        $_SESSION['usuario'] = $usuario;
-        echo "OK";
-    } else {
-        echo "Contraseña incorrecta.";
-    }
+if ($fila = $resultado->fetch_assoc()) {
+  if (password_verify($contrasena, $fila['contrasena'])) {
+    $_SESSION['usuario'] = $usuario;
+    echo "OK";
+  } else {
+    echo "Contraseña incorrecta.";
+  }
 } else {
-    echo "Usuario no encontrado.";
+  echo "Usuario no encontrado.";
 }
 ?>
