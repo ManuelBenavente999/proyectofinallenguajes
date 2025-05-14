@@ -1,12 +1,13 @@
 <?php
 session_start();
-include 'conexion.php';  // conecta a tu base de datos
+include 'conexion.php';  // conecta a mi base de datos
 
+// Validacion de datos obligatorios vacios
 if (empty($_POST['usuario']) || empty($_POST['contrasena'])) {
   echo "<script>alert('Campos vacíos'); window.location.href='login.html';</script>";
   exit;
 }
-
+// POST para datos de "usuario" y "contrasena"
 $usuario = $_POST['usuario'];
 $contrasena = $_POST['contrasena'];
 
@@ -22,7 +23,7 @@ if ($fila = $resultado->fetch_assoc()) {
     $_SESSION['usuario'] = $usuario;
     header("Location: index.html");
     exit;
-  } else {
+  } else { // Mensajes de Error por contraseña incorrecta o usuario no encontrado
     echo "<script>alert('Contraseña incorrecta'); window.location.href='login.html';</script>";
   }
 } else {
