@@ -24,9 +24,10 @@ if (isset($_GET['id']) && isset($_GET['nombre']) && isset($_GET['precio'])) {
             'cantidad' => 1
         );
     }
-    
+
     echo "Producto agregado al carrito";
 } else {
     echo "No se han proporcionado los datos correctamente.";
 }
 ?>
+
